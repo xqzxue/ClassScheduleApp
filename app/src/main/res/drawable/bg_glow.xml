@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 柔和光斑：白色径向渐变，代码中按主题色着色后缓慢漂移 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <gradient
+        android:type="radial"
+        android:gradientRadius="50%"
+        android:startColor="#FFFFFF"
+        android:centerColor="#80FFFFFF"
+        android:endColor="#00FFFFFF" />
+</shape>

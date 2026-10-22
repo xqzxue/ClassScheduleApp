@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 横屏全屏「桌面台」：底部导航隐藏，全屏渐变铺满。
+     顶部信息行（日期/星期/课表名）；下方两栏：左侧大时钟与当前课程，右侧倒计时/进度/下节课/统计。 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/overview_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false">
+
+    <!-- 缓慢漂移的彩色光斑（背景，不接收触摸） -->
+    <View
+        android:id="@+id/bg_glow_1"
+        android:layout_width="480dp"
+        android:layout_height="480dp"
+        android:layout_gravity="start|top"
+        android:layout_marginStart="-140dp"
+        android:layout_marginTop="-160dp"
+        android:background="@drawable/bg_glow"
+        android:importantForAccessibility="no" />
+
+    <View
+        android:id="@+id/bg_glow_2"
+        android:layout_width="520dp"
+        android:layout_height="520dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="-170dp"
+        android:layout_marginBottom="-180dp"
+        android:background="@drawable/bg_glow"
+        android:importantForAccessibility="no" />
+
+    <View
+        android:id="@+id/bg_glow_3"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+        android:layout_gravity="end|top"
+        android:layout_marginEnd="220dp"
+        android:layout_marginTop="-130dp"
+        android:background="@drawable/bg_glow"
+        android:importantForAccessibility="no" />
+
+    <!-- 视口：inset 内边距由代码设置（状态栏在顶部，导航键在右侧），内容按比例整体缩放居中 -->
+    <FrameLayout
+        android:id="@+id/desk_viewport"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:id="@+id/desk_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <!-- ============ 顶部信息行：日期 / 星期 / 课表名 ============ -->
+            <LinearLayout
+                android:id="@+id/desk_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:lineHeight="32sp"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
+
+                <TextView
+                    android:id="@+id/tv_weekday_pill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_pill_soft"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSecondaryContainer" />
+
+                <TextView
+                    android:id="@+id/tv_profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_pill_soft"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:drawableStart="@drawable/ic_book"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down"
+                    android:drawablePadding="6dp"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:lineHeight="20sp"
+                    android:maxLines="1"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="7dp"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                    android:textSize="15sp"
+                    android:textColor="?attr/colorOnSecondaryContainer" />
+            </LinearLayout>
+
+            <!-- 兼容字段（隐藏） -->
+            <TextView
+                android:id="@+id/tv_live_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <!-- ============ 下方两栏 ============ -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <!-- ============ 左栏：大时钟 / 状态 / 当前课程 ============ -->
+                <LinearLayout
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/desk_clock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_big_clock"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:includeFontPadding="false"
+                            android:lineHeight="96sp"
+                            android:text="08:00"
+                            android:textDirection="ltr"
+                            android:textSize="94sp"
+                            android:textStyle="bold"
+                            android:letterSpacing="-0.02"
+                            android:textColor="?attr/colorOnSurface" />
+
+                        <TextView
+                            android:id="@+id/tv_big_seconds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:layout_marginStart="12dp"
+                            android:includeFontPadding="false"
+                            android:lineHeight="36sp"
+                            android:text="00"
+                            android:textDirection="ltr"
+                            android:textSize="34sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_state_pill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_pill_solid"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_current_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:lineHeight="52sp"
+                        android:maxLines="2"
+                        android:textAppearance="@style/TextAppearance.HeroTitle"
+                        android:textSize="50sp"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <TextView
+                        android:id="@+id/tv_current_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:includeFontPadding="false"
+                        android:lineHeight="26sp"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                        android:textSize="24sp"
+                        android:textDirection="ltr"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
+
+                <!-- ============ 右栏：主倒计时 / 进度 / 下节课 / 统计 ============ -->
+                <LinearLayout
+                    android:layout_width="420dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_main_countdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:lineHeight="42sp"
+                        android:maxLines="2"
+                        android:textAppearance="@style/TextAppearance.CountdownBold"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="38sp" />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_current"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:visibility="gone"
+                        app:indicatorSize="16dp"
+                        app:trackCornerRadius="8dp"
+                        app:indicatorColor="?attr/colorPrimary"
+                        app:trackColor="@color/black_scrim" />
+
+                    <!-- 下节课：横向紧凑卡片 -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/desk_next"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardCornerRadius="28dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="?attr/colorSurfaceContainer"
+                        app:strokeColor="?attr/colorOutlineVariant"
+                        app:strokeWidth="0.6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="14dp">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_next" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="12dp"
+                                android:includeFontPadding="false"
+                                android:text="下一节"
+                                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                                android:textSize="16sp"
+                                android:textColor="?attr/colorOnSurfaceVariant" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_next_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:lineHeight="34sp"
+                                    android:maxLines="1"
+                                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                                    android:textSize="32sp"
+                                    android:textStyle="bold"
+                                    android:textColor="?attr/colorOnSurface" />
+
+                                <TextView
+                                    android:id="@+id/tv_next_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:lineHeight="20sp"
+                                    android:maxLines="1"
+                                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                                    android:textSize="18sp"
+                                    android:textDirection="ltr"
+                                    android:textColor="?attr/colorOnSurfaceVariant" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_next_countdown"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:lineHeight="26sp"
+                                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"
+                                    android:textDirection="ltr"
+                                    android:textColor="?attr/colorPrimary" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:lineHeight="16sp"
+                                    android:text="后上课"
+                                    android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                                    android:textSize="14sp"
+                                    android:textColor="?attr/colorOnSurfaceVariant" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 三个统计项合并到一张卡片 -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/desk_stats"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardCornerRadius="24dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="?attr/colorSurfaceContainer"
+                        app:strokeColor="?attr/colorOutlineVariant"
+                        app:strokeWidth="0.6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal"
+                            android:padding="12dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_dismiss_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                                <TextView
+                                    android:id="@+id/tv_dismiss_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:includeFontPadding="false"
+                                    android:lineHeight="22sp"
+                                    android:maxLines="1"
+                                    android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="?attr/colorOnSurface" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_weekend_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                                <TextView
+                                    android:id="@+id/tv_weekend_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:includeFontPadding="false"
+                                    android:lineHeight="22sp"
+                                    android:maxLines="1"
+                                    android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="?attr/colorOnSurface" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_progress_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                                <TextView
+                                    android:id="@+id/tv_today_progress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:includeFontPadding="false"
+                                    android:lineHeight="22sp"
+                                    android:maxLines="1"
+                                    android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="?attr/colorPrimary" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

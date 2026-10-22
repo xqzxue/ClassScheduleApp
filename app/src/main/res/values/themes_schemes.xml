@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 浅色公共项 -->
+    <style name="Theme.ClassSchedule.Common.Light" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="bottomNavigationStyle">@style/Widget.ClassSchedule.BottomNav</item>
+        <item name="colorError">@color/err_l</item>
+        <item name="colorOnError">@color/err_l_on</item>
+        <item name="colorErrorContainer">@color/err_l_container</item>
+        <item name="colorOnErrorContainer">@color/err_l_on_container</item>
+    </style>
+
+    <!-- 深色公共项 -->
+    <style name="Theme.ClassSchedule.Common.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="bottomNavigationStyle">@style/Widget.ClassSchedule.BottomNav</item>
+        <item name="colorError">@color/err_d</item>
+        <item name="colorOnError">@color/err_d_on</item>
+        <item name="colorErrorContainer">@color/err_d_container</item>
+        <item name="colorOnErrorContainer">@color/err_d_on_container</item>
+    </style>
+
+    <!-- 纯黑（AMOLED）叠加层：深色模式下把灰色背景压成黑色 -->
+    <style name="ThemeOverlay.ClassSchedule.PureBlack" parent="">
+        <item name="android:colorBackground">#000000</item>
+        <item name="colorSurface">#000000</item>
+        <item name="colorSurfaceContainer">#0F0F0F</item>
+        <item name="colorSurfaceContainerLow">#0A0A0A</item>
+        <item name="colorSurfaceContainerHigh">#1A1A1A</item>
+        <item name="colorSurfaceContainerHighest">#242424</item>
+        <item name="colorSurfaceVariant">#1C1C1C</item>
+        <item name="colorOnSurfaceVariant">#C8C8C8</item>
+        <item name="colorOutlineVariant">#333333</item>
+        <item name="android:navigationBarColor">#000000</item>
+    </style>
+
+    <!-- ================= 青绿 ================= -->
+    <style name="Theme.ClassSchedule.Green.Light" parent="Theme.ClassSchedule.Common.Light">
+        <item name="colorPrimary">@color/green_l_primary</item>
+        <item name="colorOnPrimary">@color/green_l_on_primary</item>
+        <item name="colorPrimaryContainer">@color/green_l_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/green_l_on_primary_container</item>
+        <item name="colorSecondary">@color/green_l_secondary</item>
+        <item name="colorOnSecondary">@color/green_l_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/green_l_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/green_l_on_secondary_container</item>
+        <item name="colorTertiary">@color/green_l_tertiary</item>
+        <item name="colorOnTertiary">@color/green_l_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/green_l_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/green_l_on_tertiary_container</item>
+        <item name="colorSurface">@color/green_l_surface</item>
+        <item name="colorOnSurface">@color/green_l_on_surface</item>
+        <item name="colorSurfaceVariant">@color/green_l_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/green_l_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/green_l_surface_container</item>
+        <item name="colorOutline">@color/green_l_outline</item>
+        <item name="colorOutlineVariant">@color/green_l_outline_variant</item>
+    </style>
+
+    <style name="Theme.ClassSchedule.Green.Dark" parent="Theme.ClassSchedule.Common.Dark">
+        <item name="colorPrimary">@color/green_d_primary</item>
+        <item name="colorOnPrimary">@color/green_d_on_primary</item>
+        <item name="colorPrimaryContainer">@color/green_d_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/green_d_on_primary_container</item>
+        <item name="colorSecondary">@color/green_d_secondary</item>
+        <item name="colorOnSecondary">@color/green_d_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/green_d_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/green_d_on_secondary_container</item>
+        <item name="colorTertiary">@color/green_d_tertiary</item>
+        <item name="colorOnTertiary">@color/green_d_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/green_d_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/green_d_on_tertiary_container</item>
+        <item name="colorSurface">@color/green_d_surface</item>
+        <item name="colorOnSurface">@color/green_d_on_surface</item>
+        <item name="colorSurfaceVariant">@color/green_d_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/green_d_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/green_d_surface_container</item>
+        <item name="colorOutline">@color/green_d_outline</item>
+        <item name="colorOutlineVariant">@color/green_d_outline_variant</item>
+    </style>
+
+    <!-- ================= 海洋蓝 ================= -->
+    <style name="Theme.ClassSchedule.Blue.Light" parent="Theme.ClassSchedule.Common.Light">
+        <item name="colorPrimary">@color/blue_l_primary</item>
+        <item name="colorOnPrimary">@color/blue_l_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_l_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_l_on_primary_container</item>
+        <item name="colorSecondary">@color/blue_l_secondary</item>
+        <item name="colorOnSecondary">@color/blue_l_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/blue_l_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/blue_l_on_secondary_container</item>
+        <item name="colorTertiary">@color/blue_l_tertiary</item>
+        <item name="colorOnTertiary">@color/blue_l_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/blue_l_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/blue_l_on_tertiary_container</item>
+        <item name="colorSurface">@color/blue_l_surface</item>
+        <item name="colorOnSurface">@color/blue_l_on_surface</item>
+        <item name="colorSurfaceVariant">@color/blue_l_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/blue_l_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/blue_l_surface_container</item>
+        <item name="colorOutline">@color/blue_l_outline</item>
+        <item name="colorOutlineVariant">@color/blue_l_outline_variant</item>
+    </style>
+
+    <style name="Theme.ClassSchedule.Blue.Dark" parent="Theme.ClassSchedule.Common.Dark">
+        <item name="colorPrimary">@color/blue_d_primary</item>
+        <item name="colorOnPrimary">@color/blue_d_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_d_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_d_on_primary_container</item>
+        <item name="colorSecondary">@color/blue_d_secondary</item>
+        <item name="colorOnSecondary">@color/blue_d_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/blue_d_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/blue_d_on_secondary_container</item>
+        <item name="colorTertiary">@color/blue_d_tertiary</item>
+        <item name="colorOnTertiary">@color/blue_d_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/blue_d_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/blue_d_on_tertiary_container</item>
+        <item name="colorSurface">@color/blue_d_surface</item>
+        <item name="colorOnSurface">@color/blue_d_on_surface</item>
+        <item name="colorSurfaceVariant">@color/blue_d_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/blue_d_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/blue_d_surface_container</item>
+        <item name="colorOutline">@color/blue_d_outline</item>
+        <item name="colorOutlineVariant">@color/blue_d_outline_variant</item>
+    </style>
+
+    <!-- ================= 紫罗兰 ================= -->
+    <style name="Theme.ClassSchedule.Purple.Light" parent="Theme.ClassSchedule.Common.Light">
+        <item name="colorPrimary">@color/purple_l_primary</item>
+        <item name="colorOnPrimary">@color/purple_l_on_primary</item>
+        <item name="colorPrimaryContainer">@color/purple_l_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/purple_l_on_primary_container</item>
+        <item name="colorSecondary">@color/purple_l_secondary</item>
+        <item name="colorOnSecondary">@color/purple_l_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/purple_l_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/purple_l_on_secondary_container</item>
+        <item name="colorTertiary">@color/purple_l_tertiary</item>
+        <item name="colorOnTertiary">@color/purple_l_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/purple_l_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/purple_l_on_tertiary_container</item>
+        <item name="colorSurface">@color/purple_l_surface</item>
+        <item name="colorOnSurface">@color/purple_l_on_surface</item>
+        <item name="colorSurfaceVariant">@color/purple_l_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/purple_l_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/purple_l_surface_container</item>
+        <item name="colorOutline">@color/purple_l_outline</item>
+        <item name="colorOutlineVariant">@color/purple_l_outline_variant</item>
+    </style>
+
+    <style name="Theme.ClassSchedule.Purple.Dark" parent="Theme.ClassSchedule.Common.Dark">
+        <item name="colorPrimary">@color/purple_d_primary</item>
+        <item name="colorOnPrimary">@color/purple_d_on_primary</item>
+        <item name="colorPrimaryContainer">@color/purple_d_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/purple_d_on_primary_container</item>
+        <item name="colorSecondary">@color/purple_d_secondary</item>
+        <item name="colorOnSecondary">@color/purple_d_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/purple_d_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/purple_d_on_secondary_container</item>
+        <item name="colorTertiary">@color/purple_d_tertiary</item>
+        <item name="colorOnTertiary">@color/purple_d_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/purple_d_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/purple_d_on_tertiary_container</item>
+        <item name="colorSurface">@color/purple_d_surface</item>
+        <item name="colorOnSurface">@color/purple_d_on_surface</item>
+        <item name="colorSurfaceVariant">@color/purple_d_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/purple_d_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/purple_d_surface_container</item>
+        <item name="colorOutline">@color/purple_d_outline</item>
+        <item name="colorOutlineVariant">@color/purple_d_outline_variant</item>
+    </style>
+
+    <!-- ================= 活力橙 ================= -->
+    <style name="Theme.ClassSchedule.Orange.Light" parent="Theme.ClassSchedule.Common.Light">
+        <item name="colorPrimary">@color/orange_l_primary</item>
+        <item name="colorOnPrimary">@color/orange_l_on_primary</item>
+        <item name="colorPrimaryContainer">@color/orange_l_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/orange_l_on_primary_container</item>
+        <item name="colorSecondary">@color/orange_l_secondary</item>
+        <item name="colorOnSecondary">@color/orange_l_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/orange_l_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/orange_l_on_secondary_container</item>
+        <item name="colorTertiary">@color/orange_l_tertiary</item>
+        <item name="colorOnTertiary">@color/orange_l_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/orange_l_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/orange_l_on_tertiary_container</item>
+        <item name="colorSurface">@color/orange_l_surface</item>
+        <item name="colorOnSurface">@color/orange_l_on_surface</item>
+        <item name="colorSurfaceVariant">@color/orange_l_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/orange_l_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/orange_l_surface_container</item>
+        <item name="colorOutline">@color/orange_l_outline</item>
+        <item name="colorOutlineVariant">@color/orange_l_outline_variant</item>
+    </style>
+
+    <style name="Theme.ClassSchedule.Orange.Dark" parent="Theme.ClassSchedule.Common.Dark">
+        <item name="colorPrimary">@color/orange_d_primary</item>
+        <item name="colorOnPrimary">@color/orange_d_on_primary</item>
+        <item name="colorPrimaryContainer">@color/orange_d_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/orange_d_on_primary_container</item>
+        <item name="colorSecondary">@color/orange_d_secondary</item>
+        <item name="colorOnSecondary">@color/orange_d_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/orange_d_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/orange_d_on_secondary_container</item>
+        <item name="colorTertiary">@color/orange_d_tertiary</item>
+        <item name="colorOnTertiary">@color/orange_d_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/orange_d_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/orange_d_on_tertiary_container</item>
+        <item name="colorSurface">@color/orange_d_surface</item>
+        <item name="colorOnSurface">@color/orange_d_on_surface</item>
+        <item name="colorSurfaceVariant">@color/orange_d_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/orange_d_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/orange_d_surface_container</item>
+        <item name="colorOutline">@color/orange_d_outline</item>
+        <item name="colorOutlineVariant">@color/orange_d_outline_variant</item>
+    </style>
+
+    <!-- ================= 樱花粉 ================= -->
+    <style name="Theme.ClassSchedule.Pink.Light" parent="Theme.ClassSchedule.Common.Light">
+        <item name="colorPrimary">@color/pink_l_primary</item>
+        <item name="colorOnPrimary">@color/pink_l_on_primary</item>
+        <item name="colorPrimaryContainer">@color/pink_l_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/pink_l_on_primary_container</item>
+        <item name="colorSecondary">@color/pink_l_secondary</item>
+        <item name="colorOnSecondary">@color/pink_l_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/pink_l_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/pink_l_on_secondary_container</item>
+        <item name="colorTertiary">@color/pink_l_tertiary</item>
+        <item name="colorOnTertiary">@color/pink_l_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/pink_l_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/pink_l_on_tertiary_container</item>
+        <item name="colorSurface">@color/pink_l_surface</item>
+        <item name="colorOnSurface">@color/pink_l_on_surface</item>
+        <item name="colorSurfaceVariant">@color/pink_l_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/pink_l_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/pink_l_surface_container</item>
+        <item name="colorOutline">@color/pink_l_outline</item>
+        <item name="colorOutlineVariant">@color/pink_l_outline_variant</item>
+    </style>
+
+    <style name="Theme.ClassSchedule.Pink.Dark" parent="Theme.ClassSchedule.Common.Dark">
+        <item name="colorPrimary">@color/pink_d_primary</item>
+        <item name="colorOnPrimary">@color/pink_d_on_primary</item>
+        <item name="colorPrimaryContainer">@color/pink_d_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/pink_d_on_primary_container</item>
+        <item name="colorSecondary">@color/pink_d_secondary</item>
+        <item name="colorOnSecondary">@color/pink_d_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/pink_d_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/pink_d_on_secondary_container</item>
+        <item name="colorTertiary">@color/pink_d_tertiary</item>
+        <item name="colorOnTertiary">@color/pink_d_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/pink_d_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/pink_d_on_tertiary_container</item>
+        <item name="colorSurface">@color/pink_d_surface</item>
+        <item name="colorOnSurface">@color/pink_d_on_surface</item>
+        <item name="colorSurfaceVariant">@color/pink_d_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/pink_d_on_surface_variant</item>
+        <item name="colorSurfaceContainer">@color/pink_d_surface_container</item>
+        <item name="colorOutline">@color/pink_d_outline</item>
+        <item name="colorOutlineVariant">@color/pink_d_outline_variant</item>
+    </style>
+</resources>
