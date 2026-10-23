@@ -33,6 +33,7 @@
         <item name="bottomNavigationStyle">@style/Widget.ClassSchedule.BottomNav</item>
         <item name="materialAlertDialogTheme">@style/Theme.ClassSchedule.AlertDialog</item>
         <item name="bottomSheetDialogTheme">@style/Theme.ClassSchedule.BottomSheetDialog</item>
+        <item name="popupMenuBackground">@drawable/bg_popup_menu</item>
     </style>
 
     <style name="Theme.ClassSchedule.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">

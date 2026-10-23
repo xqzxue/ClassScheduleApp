@@ -4,7 +4,7 @@
     android:id="@+id/card_profile"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="7dp"
+    android:layout_marginVertical="10dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"

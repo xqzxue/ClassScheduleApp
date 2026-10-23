@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ import com.classschedule.databinding.FragmentOverviewBinding;
 import com.classschedule.databinding.ItemProfileBinding;
 import com.classschedule.engine.ScheduleEngine;
 import com.classschedule.engine.ScheduleStatus;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.time.Duration;
@@ -291,22 +292,40 @@ public class OverviewFragment extends Fragment {
                 if (getActivity() instanceof MainActivity) {
                     ((MainActivity) getActivity()).selectTab(R.id.nav_settings);
                 }
-                if (currentSwitchDialog != null) {
-                    currentSwitchDialog.dismiss();
+                if (currentSwitchSheet != null) {
+                    currentSwitchSheet.dismiss();
                 }
             });
         }
 
-        androidx.appcompat.app.AlertDialog dlg = new MaterialAlertDialogBuilder(requireContext())
-                .setView(sheet.getRoot())
-                .setNegativeButton("关闭", null)
-                .show();
-        Dialogs.apply(dlg);
-        currentSwitchDialog = dlg;
+        BottomSheetDialog dlg = new BottomSheetDialog(requireContext());
+        dlg.setContentView(sheet.getRoot());
+        // 直接展开，不停留在半折叠的 peek 状态
+        dlg.getBehavior().setSkipCollapsed(true);
+        if (landscape) {
+            // 横屏：收窄宽度并限制最大高度，列表内部滚动，避免挤压与文字显示不全
+            DisplayMetrics dm = getResources().getDisplayMetrics();
+            int w = Math.round(dm.widthPixels * 0.56f);
+            w = Math.max(w, dp(320));
+            w = Math.min(w, dp(520));
+            final int sheetWidth = w;
+            dlg.getBehavior().setMaxHeight(Math.round(dm.heightPixels * 0.86f));
+            dlg.setOnShowListener(d -> {
+                View bottomSheet = dlg.findViewById(
+                        com.google.android.material.R.id.design_bottom_sheet);
+                if (bottomSheet != null) {
+                    ViewGroup.LayoutParams lp = bottomSheet.getLayoutParams();
+                    lp.width = sheetWidth;
+                    bottomSheet.setLayoutParams(lp);
+                }
+            });
+        }
+        dlg.show();
+        currentSwitchSheet = dlg;
     }
 
-    /** 当前打开的「切换课程表」弹窗，用于点击卡片后关闭。 */
-    private android.app.Dialog currentSwitchDialog;
+    /** 当前打开的「切换课程表」底部面板，点击卡片后关闭。 */
+    private BottomSheetDialog currentSwitchSheet;
 
     private View buildSwitchRow(ScheduleProfile p, boolean active, boolean builtin) {
         ItemProfileBinding row = ItemProfileBinding.inflate(getLayoutInflater());
@@ -324,8 +343,8 @@ public class OverviewFragment extends Fragment {
                 Snackbar.make(b.getRoot(), "已切换到「" + p.name + "」",
                         Snackbar.LENGTH_SHORT).show();
             }
-            if (currentSwitchDialog != null) {
-                currentSwitchDialog.dismiss();
+            if (currentSwitchSheet != null) {
+                currentSwitchSheet.dismiss();
             }
         });
         return row.getRoot();
