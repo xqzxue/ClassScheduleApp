@@ -21,6 +21,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.classschedule.MainActivity;
+import com.classschedule.R;
 import com.classschedule.data.CoursePeriod;
 import com.classschedule.data.DaySchedule;
 import com.classschedule.data.ScheduleProfile;
@@ -32,7 +34,7 @@ import com.classschedule.databinding.FragmentOverviewBinding;
 import com.classschedule.databinding.ItemProfileBinding;
 import com.classschedule.engine.ScheduleEngine;
 import com.classschedule.engine.ScheduleStatus;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.time.Duration;
@@ -267,27 +269,46 @@ public class OverviewFragment extends Fragment {
         SettingsStore store = SettingsStore.get();
         DialogSwitchProfileBinding sheet =
                 DialogSwitchProfileBinding.inflate(getLayoutInflater());
-        BottomSheetDialog dlg = new BottomSheetDialog(requireContext());
 
         sheet.containerBuiltin.removeAllViews();
         sheet.containerCustom.removeAllViews();
         for (ScheduleProfile p : store.builtinProfiles()) {
             sheet.containerBuiltin.addView(
-                    buildSwitchRow(p, store.isActive(p.id), true, dlg));
+                    buildSwitchRow(p, store.isActive(p.id), true));
         }
         List<ScheduleProfile> customs = store.customProfiles();
         sheet.tvNoCustom.setVisibility(customs.isEmpty() ? View.VISIBLE : View.GONE);
         for (ScheduleProfile p : customs) {
             sheet.containerCustom.addView(
-                    buildSwitchRow(p, store.isActive(p.id), false, dlg));
+                    buildSwitchRow(p, store.isActive(p.id), false));
         }
 
-        dlg.setContentView(sheet.getRoot());
-        dlg.show();
+        // 横屏没有底部导航，隐藏「前往配置页」入口
+        if (landscape) {
+            sheet.btnGotoSettings.setVisibility(View.GONE);
+        } else {
+            sheet.btnGotoSettings.setOnClickListener(v -> {
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).selectTab(R.id.nav_settings);
+                }
+                if (currentSwitchDialog != null) {
+                    currentSwitchDialog.dismiss();
+                }
+            });
+        }
+
+        androidx.appcompat.app.AlertDialog dlg = new MaterialAlertDialogBuilder(requireContext())
+                .setView(sheet.getRoot())
+                .setNegativeButton("关闭", null)
+                .show();
+        Dialogs.apply(dlg);
+        currentSwitchDialog = dlg;
     }
 
-    private View buildSwitchRow(ScheduleProfile p, boolean active, boolean builtin,
-                                BottomSheetDialog dlg) {
+    /** 当前打开的「切换课程表」弹窗，用于点击卡片后关闭。 */
+    private android.app.Dialog currentSwitchDialog;
+
+    private View buildSwitchRow(ScheduleProfile p, boolean active, boolean builtin) {
         ItemProfileBinding row = ItemProfileBinding.inflate(getLayoutInflater());
         row.cardProfile.setCardBackgroundColor(
                 themeColor(com.google.android.material.R.attr.colorSurfaceContainer));
@@ -303,7 +324,9 @@ public class OverviewFragment extends Fragment {
                 Snackbar.make(b.getRoot(), "已切换到「" + p.name + "」",
                         Snackbar.LENGTH_SHORT).show();
             }
-            dlg.dismiss();
+            if (currentSwitchDialog != null) {
+                currentSwitchDialog.dismiss();
+            }
         });
         return row.getRoot();
     }

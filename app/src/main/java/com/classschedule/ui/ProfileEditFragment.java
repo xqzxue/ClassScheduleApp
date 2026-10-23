@@ -243,7 +243,8 @@ public class ProfileEditFragment extends Fragment implements SettingsStore.Chang
                             .setNegativeButton("取消", null)
                             .show());
         }
-        builder.show();
+        androidx.appcompat.app.AlertDialog dialog = builder.show();
+        Dialogs.apply(dialog);
     }
 
     private interface TimeCallback {

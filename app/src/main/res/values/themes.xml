@@ -31,6 +31,26 @@
         <item name="android:windowLightStatusBar">@bool/light_status_bar</item>
         <item name="android:windowLightNavigationBar">@bool/light_status_bar</item>
         <item name="bottomNavigationStyle">@style/Widget.ClassSchedule.BottomNav</item>
+        <item name="materialAlertDialogTheme">@style/Theme.ClassSchedule.AlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.ClassSchedule.BottomSheetDialog</item>
+    </style>
+
+    <style name="Theme.ClassSchedule.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ClassSchedule.AlertDialog</item>
+    </style>
+
+    <style name="ShapeAppearance.ClassSchedule.AlertDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">28dp</item>
+    </style>
+
+    <style name="Theme.ClassSchedule.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ClassSchedule.BottomSheetDialog</item>
+    </style>
+
+    <style name="ShapeAppearance.ClassSchedule.BottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">28dp</item>
     </style>
 
     <style name="Widget.ClassSchedule.BottomNav" parent="Widget.Material3.BottomNavigationView">

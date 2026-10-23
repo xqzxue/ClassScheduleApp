@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,8 +16,10 @@ import com.classschedule.data.ScheduleRepository;
 import com.classschedule.data.SettingsStore;
 import com.classschedule.databinding.DialogCreateProfileBinding;
 import com.classschedule.databinding.DialogEditTextBinding;
+import com.classschedule.databinding.DialogProfileMenuBinding;
 import com.classschedule.databinding.FragmentSettingsBinding;
 import com.classschedule.databinding.ItemProfileBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -235,34 +236,32 @@ public class SettingsFragment extends Fragment implements SettingsStore.ChangeOb
     }
 
     private void showProfileMenu(View anchor, ScheduleProfile p) {
-        PopupMenu menu = new PopupMenu(requireContext(), anchor);
-        menu.getMenu().add(0, 0, 0, "编辑课程");
-        menu.getMenu().add(0, 1, 1, "重命名");
-        menu.getMenu().add(0, 2, 2, "复制一份");
-        menu.getMenu().add(0, 3, 3, "删除");
-        menu.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case 0:
-                    store.setActive(p.id);
-                    if (getActivity() instanceof Host) {
-                        ((Host) getActivity()).openProfileEditor(p.id);
-                    }
-                    return true;
-                case 1:
-                    showRenameDialog(p);
-                    return true;
-                case 2:
-                    ScheduleProfile copy = store.createCopy(p.name + " 副本", p.id);
-                    snack("已复制为「" + copy.name + "」并切换");
-                    return true;
-                case 3:
-                    confirmDelete(p);
-                    return true;
-                default:
-                    return false;
+        DialogProfileMenuBinding menu = DialogProfileMenuBinding.inflate(getLayoutInflater());
+        BottomSheetDialog dlg = new BottomSheetDialog(requireContext());
+        dlg.setContentView(menu.getRoot());
+        Dialogs.apply(dlg);
+
+        menu.menuEdit.setOnClickListener(v -> {
+            dlg.dismiss();
+            store.setActive(p.id);
+            if (getActivity() instanceof Host) {
+                ((Host) getActivity()).openProfileEditor(p.id);
             }
         });
-        menu.show();
+        menu.menuRename.setOnClickListener(v -> {
+            dlg.dismiss();
+            showRenameDialog(p);
+        });
+        menu.menuCopy.setOnClickListener(v -> {
+            dlg.dismiss();
+            ScheduleProfile copy = store.createCopy(p.name + " 副本", p.id);
+            snack("已复制为「" + copy.name + "」并切换");
+        });
+        menu.menuDelete.setOnClickListener(v -> {
+            dlg.dismiss();
+            confirmDelete(p);
+        });
+        dlg.show();
     }
 
     /** 0 空白 / 1 复制一班 / 2 复制二班。 */
@@ -293,9 +292,9 @@ public class SettingsFragment extends Fragment implements SettingsStore.ChangeOb
         dlg.rowClass1.setOnClickListener(select);
         dlg.rowClass2.setOnClickListener(select);
 
-        new MaterialAlertDialogBuilder(requireContext())
+        androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
                 .setView(dlg.getRoot())
-                .setPositiveButton("创建", (dialog, which) -> {
+                .setPositiveButton("创建", (d, which) -> {
                     String text = dlg.editName.getText() == null
                             ? "" : dlg.editName.getText().toString().trim();
                     if (createMode == 0) {
@@ -320,6 +319,7 @@ public class SettingsFragment extends Fragment implements SettingsStore.ChangeOb
                 })
                 .setNegativeButton("取消", null)
                 .show();
+        Dialogs.apply(dialog);
     }
 
     private void styleCreateRow(MaterialCardView row, boolean selected) {
@@ -341,16 +341,17 @@ public class SettingsFragment extends Fragment implements SettingsStore.ChangeOb
         if (dlg.editInput.getText() != null) {
             dlg.editInput.setSelection(dlg.editInput.getText().length());
         }
-        new MaterialAlertDialogBuilder(requireContext())
+        androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("重命名配置")
                 .setView(dlg.getRoot())
-                .setPositiveButton("保存", (dialog, which) -> {
+                .setPositiveButton("保存", (d, which) -> {
                     String name = nameOr(dlg, p.name);
                     store.renameProfile(p.id, name);
                     snack("已重命名为「" + name + "」");
                 })
                 .setNegativeButton("取消", null)
                 .show();
+        Dialogs.apply(dialog);
     }
 
     private void confirmDelete(ScheduleProfile p) {

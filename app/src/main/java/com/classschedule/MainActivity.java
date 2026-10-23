@@ -167,6 +167,13 @@ public class MainActivity extends androidx.appcompat.app.AppCompatActivity
                 .commit();
     }
 
+    /** 供概括页「切换课程表」弹窗跳转到指定 Tab（横屏底部导航隐藏时无效）。 */
+    public void selectTab(int menuId) {
+        if (binding != null && binding.bottomNav.getVisibility() == View.VISIBLE) {
+            binding.bottomNav.setSelectedItemId(menuId);
+        }
+    }
+
     /** 仅截取当前画面（配合系统自动重建，如切换深色模式）。 */
     @Override
     public void captureForRecreate() {

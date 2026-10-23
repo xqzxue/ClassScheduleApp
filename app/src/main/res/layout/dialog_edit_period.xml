@@ -12,20 +12,22 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxCornerRadiusBottomEnd="14dp"
-        app:boxCornerRadiusBottomStart="14dp"
-        app:boxCornerRadiusTopEnd="14dp"
-        app:boxCornerRadiusTopStart="14dp">
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pe_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:hint="课程名称（留空为无课）"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLength="20"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
