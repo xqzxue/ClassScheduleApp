@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色主题 M3 色调 -->
+    <color name="md_primary">#81D5CF</color>
+    <color name="md_on_primary">#003734</color>
+    <color name="md_primary_container">#00504D</color>
+    <color name="md_on_primary_container">#9DF1EB</color>
+    <color name="md_secondary">#ACC8C3</color>
+    <color name="md_on_secondary">#173532</color>
+    <color name="md_secondary_container">#2E4B48</color>
+    <color name="md_on_secondary_container">#C7E8E4</color>
+    <color name="md_tertiary">#ADCAE5</color>
+    <color name="md_on_tertiary">#11334A</color>
+    <color name="md_tertiary_container">#2B4A61</color>
+    <color name="md_on_tertiary_container">#C9E6FF</color>
+    <color name="md_surface">#0E1514</color>
+    <color name="md_on_surface">#DFE5E2</color>
+    <color name="md_surface_variant">#3E4946</color>
+    <color name="md_on_surface_variant">#BEC9C5</color>
+    <color name="md_surface_container">#1A211F</color>
+    <color name="md_outline">#889390</color>
+    <color name="md_outline_variant">#3E4946</color>
+    <color name="md_error">#FFB4AB</color>
+    <color name="md_on_error">#690005</color>
+    <color name="md_error_container">#93000A</color>
+    <color name="md_on_error_container">#FFDAD6</color>
+
+    <color name="ic_launcher_background">#003734</color>
+    <color name="ic_launcher_foreground">#81D5CF</color>
+    <color name="black_scrim">#66000000</color>
+</resources>
